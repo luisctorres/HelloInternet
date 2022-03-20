@@ -13,8 +13,6 @@ import org.springframework.web.client.RestTemplate;
 @RequestMapping("/nasa")
 public class NasaController {
 
-    @Autowired
-    RestTemplate restTemplate;
     private final String myNasaKey = "Ra46Z9dcQW0m3hoGcYugzrhHZ1NPY4SmPjP5dN3g";
     private final String nasaApodEndPoint = "https://api.nasa.gov/planetary/apod?api_key=" + myNasaKey;
 
@@ -26,7 +24,10 @@ public class NasaController {
 
     @GetMapping("/pickFive")
     public Object pickFive(@RequestParam int count, RestTemplate restTemplate){
-        return restTemplate.getForObject(nasaApodEndPoint, Object.class);
+
+        String pickFiveURL = nasaApodEndPoint + "&count=" + count;
+
+        return restTemplate.getForObject(pickFiveURL, Object.class);
     }
 
     @GetMapping("/getPhotosInRange")
