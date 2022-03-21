@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Date;
+
 @RestController
 
 //create a path for all associated route handlers
@@ -31,10 +33,15 @@ public class NasaController {
     }
 
     @GetMapping("/getPhotosInRange")
-    public Object getPhotosInRange(@RequestParam String start_date,
-                                   @RequestParam String end_date,
+    public Object getPhotosInRange(@RequestParam("start_date") String startDate,
+                                   @RequestParam("end_date") String endDate,
                                    RestTemplate restTemplate) {
-        return restTemplate.getForObject(nasaApodEndPoint, Object.class);
+
+        //https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&start_date=2017-07-08&end_date=2017-07-10
+
+        String getPhotosInRangeURL = nasaApodEndPoint + "&start_date=" + startDate + "&end_date=" + endDate;
+
+        return restTemplate.getForObject(getPhotosInRangeURL, Object.class);
     }
 
 
